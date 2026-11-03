@@ -19,7 +19,11 @@ llm = ChatOpenAI(model="gpt-4o", api_key=settings.OPENAI_API_KEY)
 
 def context_retriever_node(state: AgentState) -> Dict:
     diff = fetch_pr_diff(state["repo_name"], state["pr_number"])
-    return {"diff": diff, "iteration_count": 0}
+    return {"diff": diff, "iteration_count": 0, "proposed_files": {}, # Explicitly initialize to prevent KeyErrors
+        "plan": "",
+        "sandbox_logs": "",
+        "status": "pending
+        }
 
 def planner_executor_node(state: AgentState) -> Dict:
     prompt = f"""
