@@ -1,9 +1,15 @@
 FROM python:3.11-slim
 
+# Install system utilities needed for execution tools
+RUN apt-get update && apt-get install -y coreutils && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /workspace
 
-# Install common testing and linting tools
+# Install common testing and linting tools globally
 RUN pip install --no-cache-dir pytest ruff black flake8
 
+# Ensure path links are explicitly visible
+ENV PATH="/usr/local/bin:${PATH}"
+
 # Keep container alive or read commands directly via execution APIs
-CMD ["bash"]
+CMD ["tail", "-f", "/dev/null"]
