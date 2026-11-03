@@ -40,7 +40,7 @@ def run_in_sandbox(commands: list, code_files: dict) -> dict:
         
         container = docker_client.containers.run(
             "ai-agent-sandbox:latest",
-            command="sleep 300",
+            command="tail -f /dev/null",
             volumes=volumes,
             detach=True,
             network_mode="none" # Isolate network execution layers
